@@ -47,10 +47,23 @@ public class ArduinoConnection {
     }
 
     public void blink(int delay) {
-        String a = "blink";
+        String in = "blink";
+        send(in,delay);
+    }
 
+    public void oeffneSchranke(int delay){
+        String in = "open";
+        send(in,delay);
+    }
+
+    public void schliesseSchranke(int delay){
+        String in = "close";
+        send(in,delay);
+    }
+
+    private void send(String in,int delay){
         try {
-            sp.getOutputStream().write(a.getBytes());
+            sp.getOutputStream().write(in.getBytes());
             sp.getOutputStream().flush();
             System.out.println("Written");
             Thread.sleep(21+delay);
