@@ -7,8 +7,8 @@ import java.io.IOException;
 public class ArduinoConnection {
 
     /*
-    * ToDo: Kommentieren,
-    *   restlichen Funktionen impementiren
+    * ToDo:
+    *  - restlichen Funktionen implementieren
     * */
 
     private SerialPort sp;
@@ -18,18 +18,26 @@ public class ArduinoConnection {
     private int stopBits = 1;
     private int parity = 0;
 
-
+    /**
+    * Der Serielle Port wird Konfiguriert
+    * @param port Name des Seriellen Ports*
+    */
     public ArduinoConnection(String port) {
         sp = SerialPort.getCommPort(port);
         sp.setComPortParameters(baudRate, dataBits, stopBits, parity);
         //sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0);
-
     }
 
+    /**
+     * Stellt verbindung mit dem im Konstruktor festgelegten Port her.
+     * Wartet danach 2 sek.
+     * @return ob der Port erfolgreich geöffnet wurde.
+     */
     public boolean openPort() {
         boolean re = sp.openPort();
 
         try {
+            //Die 2 sek sind optional wobei sie zu guten test Ergebnissen geführt haben.
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -37,8 +45,14 @@ public class ArduinoConnection {
         return re;
     }
 
+    /**
+     * Wartet 2 sek.
+     * Schließt die Verbindung mit dem im Konstruktor festgelegten Port.
+     * @return ob der Port erfolgreich geschlossen wurde.
+     */
     public boolean closePort() {
         try {
+            //Die 2 sek sind optional wobei sie zu guten test Ergebnissen geführt haben.
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -46,21 +60,38 @@ public class ArduinoConnection {
         return sp.closePort();
     }
 
+    /**
+     * Schickt den String "blink" an den im Konstruktor festgelegten und geöffneten Port.
+     * @param delay Zeit nach dem Senden in ms. Wird addiert mit 21 ms als minimale Wartezeit.
+     */
     public void blink(int delay) {
         String in = "blink";
         send(in,delay);
     }
 
+    /**
+     * Schickt den String "open" an den im Konstruktor festgelegten und geöffneten Port.
+     * @param delay Zeit nach dem Senden in ms. Wird addiert mit 21 ms als minimale Wartezeit.
+     */
     public void oeffneSchranke(int delay){
         String in = "open";
         send(in,delay);
     }
 
+    /**
+     * Schickt den String "close" an den im Konstruktor festgelegten und geöffneten Port.
+     * @param delay Zeit nach dem Senden in ms. Wird addiert mit 21 ms als minimale Wartezeit.
+     */
     public void schliesseSchranke(int delay){
         String in = "close";
         send(in,delay);
     }
 
+    /**
+     * Sendet den String über die Serielle Schnittstelle und wartet 21 + delay ms .
+     * @param in String der gesendet wird.
+     * @param delay Wartezeit nach der Sendung. (>0)
+     */
     private void send(String in,int delay){
         try {
             sp.getOutputStream().write(in.getBytes());
