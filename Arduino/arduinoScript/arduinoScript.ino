@@ -1,8 +1,12 @@
 #include <Servo.h>
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
 
-int ledConnector = 2;
-int ledConnector2 = 4;
-int ledConnector3 = 7;
+int ledConnector = 24;
+int ledConnector2 = 22;
+int ledConnector3 = 26;
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 Servo myservo;
 void setup() {
@@ -13,11 +17,15 @@ void setup() {
   while (!Serial) {
     ;
   }
+  
   pinMode(ledConnector, OUTPUT);
   pinMode(ledConnector2, OUTPUT);
   pinMode(ledConnector3, OUTPUT);
 
-  myservo.attach(9);
+  myservo.attach(28);
+
+  lcd.init();
+  lcd.backlight();
 }
 
 void blink() {
@@ -28,12 +36,22 @@ void blink() {
   }
 }
 
-void schranke(int state){
-  if(state == 1){
+void schranke(int state) {
+  if (state == 1) {
     myservo.write(90);
-  }else{
+  } else {
     myservo.write(180);
   }
+}
+
+void printLcd(int line){
+  Serial.write("Hi Welt");
+  lcd.setCursor(0, line);
+  lcd.print("                     ");
+  lcd.setCursor(0, line);
+  
+  while(Serial.available() == 0);
+  lcd.print(Serial.readString());
 }
 
 void loop() {
@@ -47,12 +65,23 @@ void loop() {
     if (in == "blink") {
       blink();
     }
-    if(in == "open"){
+    if (in == "open") {
       schranke(1);
     }
-    if(in == "close"){
+    if (in == "close") {
       schranke(2);
+    }
+    if (in == "print0"){
+      printLcd(0);
+    }
+    if (in == "print1"){
+      printLcd(1);
     }
   }
   digitalWrite(ledConnector2, HIGH);
+  
+//  lcd.setCursor(0, 0);//Hier wird die Position des ersten Zeichens festgelegt. In diesem Fall bedeutet (0,0) das erste Zeichen in der ersten Zeile.
+//  lcd.print("Freie Plaetze:");
+//  lcd.setCursor(0, 1);// In diesem Fall bedeutet (0,1) das erste Zeichen in der zweiten Zeile.
+//  lcd.print("   400");
 }
