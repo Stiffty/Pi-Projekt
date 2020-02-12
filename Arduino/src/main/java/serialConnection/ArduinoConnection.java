@@ -3,13 +3,19 @@ package serialConnection;
 import com.fazecast.jSerialComm.SerialPort;
 
 import java.io.IOException;
+import java.io.InputStream;
+
+import java.io.*;
+import java.nio.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ArduinoConnection {
 
     /*
-    * ToDo:
-    *  - restlichen Funktionen implementieren
-    * */
+     * ToDo:
+     *  - restlichen Funktionen implementieren
+     * */
 
     private SerialPort sp;
 
@@ -19,9 +25,10 @@ public class ArduinoConnection {
     private int parity = 0;
 
     /**
-    * Der Serielle Port wird Konfiguriert
-    * @param port Name des Seriellen Ports*
-    */
+     * Der Serielle Port wird Konfiguriert
+     *
+     * @param port Name des Seriellen Ports*
+     */
     public ArduinoConnection(String port) {
         sp = SerialPort.getCommPort(port);
         sp.setComPortParameters(baudRate, dataBits, stopBits, parity);
@@ -31,6 +38,7 @@ public class ArduinoConnection {
     /**
      * Stellt verbindung mit dem im Konstruktor festgelegten Port her.
      * Wartet danach 2 sek.
+     *
      * @return ob der Port erfolgreich geöffnet wurde.
      */
     public boolean openPort() {
@@ -48,6 +56,7 @@ public class ArduinoConnection {
     /**
      * Wartet 2 sek.
      * Schließt die Verbindung mit dem im Konstruktor festgelegten Port.
+     *
      * @return ob der Port erfolgreich geschlossen wurde.
      */
     public boolean closePort() {
@@ -62,42 +71,74 @@ public class ArduinoConnection {
 
     /**
      * Schickt den String "blink" an den im Konstruktor festgelegten und geöffneten Port.
+     *
      * @param delay Zeit nach dem Senden in ms. Wird addiert mit 21 ms als minimale Wartezeit.
      */
     public void blink(int delay) {
         String in = "blink";
-        send(in,delay);
+        send(in, delay);
     }
 
     /**
      * Schickt den String "open" an den im Konstruktor festgelegten und geöffneten Port.
+     *
      * @param delay Zeit nach dem Senden in ms. Wird addiert mit 21 ms als minimale Wartezeit.
      */
-    public void oeffneSchranke(int delay){
+    public void oeffneSchranke(int delay) {
         String in = "open";
-        send(in,delay);
+        send(in, delay);
     }
 
     /**
      * Schickt den String "close" an den im Konstruktor festgelegten und geöffneten Port.
+     *
      * @param delay Zeit nach dem Senden in ms. Wird addiert mit 21 ms als minimale Wartezeit.
      */
-    public void schliesseSchranke(int delay){
+    public void schliesseSchranke(int delay) {
         String in = "close";
-        send(in,delay);
+        send(in, delay);
+    }
+
+    public void printText(int delay, String text, int line) {
+        String in = (line == 0 ? "print0" : "print1");
+
+        send(in, (delay == 0 ? delay + 5 : delay));
+
+        send(text, delay);
+    }
+
+    public void readIn() {
+        new Thread(() -> {
+            StringBuilder s = new StringBuilder();
+            while (true) {
+                try {
+                    while (sp.getInputStream().available() > 0)
+                        s.append((char) sp.getInputStream().read());
+
+
+                    if (s.length() != 0 && sp.getInputStream().available() == 0) {
+                        System.out.println(s);
+                        s = new StringBuilder();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     /**
      * Sendet den String über die Serielle Schnittstelle und wartet 21 + delay ms .
-     * @param in String der gesendet wird.
+     *
+     * @param in    String der gesendet wird.
      * @param delay Wartezeit nach der Sendung. (>0)
      */
-    private void send(String in,int delay){
+    private void send(String in, int delay) {
         try {
             sp.getOutputStream().write(in.getBytes());
             sp.getOutputStream().flush();
             System.out.println("Written");
-            Thread.sleep(21+delay);
+            Thread.sleep(21 + delay);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
