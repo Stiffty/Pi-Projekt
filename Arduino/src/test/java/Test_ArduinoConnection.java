@@ -9,8 +9,8 @@ public class Test_ArduinoConnection {
 //        ac.blink(100);
 //        ac.blink(10000);
 //        ac.blink(0);
-        ac.schliesseSchranke(1000);
-        //ac.oeffneSchranke(0);
+        //ac.schliesseSchranke(1000);
+        ac.oeffneSchranke(0);
 
         ac.printText(100,"Hallo Welt",0);
         ac.printText(100,"hi",1);
