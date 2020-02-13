@@ -1,12 +1,19 @@
 #include <Servo.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <HCSR04.h>
 
 int ledConnector = 24;
 int ledConnector2 = 22;
 int ledConnector3 = 26;
 
+int servo_Pin = 28;
+
+int ultrasonic_Trigger_Pin = 32;
+int ultrasonic_Echo_Pin = 30;
+
 LiquidCrystal_I2C lcd(0x27, 16, 2);
+UltraSonicDistanceSensor distanceSensor(ultrasonic_Trigger_Pin, ultrasonic_Echo_Pin);
 
 Servo myservo;
 void setup() {
@@ -16,13 +23,16 @@ void setup() {
   //wartet bis die Serielle Verbindung aufgebaut wurde
   while (!Serial) {
     ;
+
+   delay(5000);
+   myservo.write(90);
   }
   
   pinMode(ledConnector, OUTPUT);
   pinMode(ledConnector2, OUTPUT);
   pinMode(ledConnector3, OUTPUT);
 
-  myservo.attach(28);
+  myservo.attach(servo_Pin);
 
   lcd.init();
   lcd.backlight();
@@ -79,6 +89,12 @@ void loop() {
     }
   }
   digitalWrite(ledConnector2, HIGH);
+
+  if(distanceSensor.measureDistanceCm() < 4){
+    schranke(2);
+   // Serial.println("_____________________________________________");
+  }
+ // Serial.println(distanceSensor.measureDistanceCm());
   
 //  lcd.setCursor(0, 0);//Hier wird die Position des ersten Zeichens festgelegt. In diesem Fall bedeutet (0,0) das erste Zeichen in der ersten Zeile.
 //  lcd.print("Freie Plaetze:");
