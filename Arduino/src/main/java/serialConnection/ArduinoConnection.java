@@ -108,6 +108,7 @@ public class ArduinoConnection {
     }
 
     public void readIn() {
+        byte[] key = {(byte) 0x80, (byte) 0x06, (byte) 0xA3, (byte) 0xA3};
         new Thread(() -> {
             StringBuilder s = new StringBuilder();
             while (true) {
@@ -117,7 +118,15 @@ public class ArduinoConnection {
 
 
                     if (s.length() != 0 && sp.getInputStream().available() == 0) {
-                        System.out.println(s);
+                        String out = s.toString();
+                        if(out.equals("rifd")){
+                            System.out.println();
+                            //send(key.toString(),100);
+                            for (int i = 0; i < key.length; i++) {
+                               send(key[i],100);
+                            }
+                        }
+                        //System.out.println((key[2]));
                         s = new StringBuilder();
                     }
                 } catch (IOException e) {
@@ -136,6 +145,19 @@ public class ArduinoConnection {
     private void send(String in, int delay) {
         try {
             sp.getOutputStream().write(in.getBytes());
+            sp.getOutputStream().flush();
+            System.out.println("Written");
+            Thread.sleep(21 + delay);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void send(Byte in, int delay) {
+        try {
+            sp.getOutputStream().write(in);
             sp.getOutputStream().flush();
             System.out.println("Written");
             Thread.sleep(21 + delay);
