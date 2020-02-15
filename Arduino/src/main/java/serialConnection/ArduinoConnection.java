@@ -99,16 +99,27 @@ public class ArduinoConnection {
         send(in, delay);
     }
 
+    /**
+     * Sendet ein Codewort und den Text mit min 26 ms delay.
+     * @param delay Delay zwischen den sendungen. Wird zweimal ausgeführt.
+     * @param text Text der auf dem Lcd Display angezeigt wird.
+     * @param line Entweder 1 oder 0. 0 = obere Reihe. 1 = Unterere Reihe.
+     */
     public void printText(int delay, String text, int line) {
+        //Abhängig von line wird das passende Schlüsselwort gesendet.
         String in = (line == 0 ? "print0" : "print1");
 
-        send(in, (delay == 0 ? delay + 5 : delay));
-
+        //Sendet Keyword. Falls delay 0 ist, werden 5ms addiert, da es sonst die Übertragung asynchron werden kann.
+        send(in, (delay < 5 ? delay + 5 : delay));
+        //Sendet den zu zeigenden Text.
         send(text, delay);
     }
 
+    /**
+     * Erstellt neuen Thread und hört auf den Input stream.
+     */
     public void readIn() {
-        byte[] key = {(byte) 0x80, (byte) 0x06, (byte) 0xA3, (byte) 0xA3};
+        byte[] key = {(byte) 0x80, (byte) 0x07, (byte) 0xA3, (byte) 0xA3};
         new Thread(() -> {
             StringBuilder s = new StringBuilder();
             while (true) {
@@ -120,13 +131,14 @@ public class ArduinoConnection {
                     if (s.length() != 0 && sp.getInputStream().available() == 0) {
                         String out = s.toString();
                         if(out.equals("rifd")){
-                            System.out.println();
                             //send(key.toString(),100);
-                            for (int i = 0; i < key.length; i++) {
-                               send(key[i],100);
+                            for (byte b : key) {
+                                send(b, 100);
                             }
+                        }else if(out.equals("access")){
+                            System.out.println("Access Granted.");
                         }
-                        //System.out.println((key[2]));
+                        System.out.println(out);
                         s = new StringBuilder();
                     }
                 } catch (IOException e) {
