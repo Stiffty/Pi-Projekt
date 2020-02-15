@@ -4,6 +4,11 @@ public class Test_ArduinoConnection {
 
     public static void main(String[] args) {
         ArduinoConnection ac = new ArduinoConnection("COM5");
+
+        ac.addRifdListener(() ->{
+            System.out.println("Access allowed");
+        });
+
         System.out.println(ac.openPort());
         ac.readIn();
 //        ac.blink(100);

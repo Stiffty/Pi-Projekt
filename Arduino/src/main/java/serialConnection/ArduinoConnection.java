@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import java.io.*;
 import java.nio.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +25,10 @@ public class ArduinoConnection {
     private int stopBits = 1;
     private int parity = 0;
 
+    
+    private List<RifdAccessEvent> listeners;
+
+    public interface RifdAccessEvent {void rifdAnmeldung();};
     /**
      * Der Serielle Port wird Konfiguriert
      *
@@ -32,7 +37,20 @@ public class ArduinoConnection {
     public ArduinoConnection(String port) {
         sp = SerialPort.getCommPort(port);
         sp.setComPortParameters(baudRate, dataBits, stopBits, parity);
+
+        listeners = new ArrayList<>();
         //sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0);
+    }
+
+    public void addRifdListener(RifdAccessEvent listener){
+        listeners.add(listener);
+    }
+
+    private void callListeners(){
+        for (RifdAccessEvent ra: listeners
+             ) {
+            ra.rifdAnmeldung();
+        }
     }
 
     /**
@@ -136,9 +154,8 @@ public class ArduinoConnection {
                                 send(b, 100);
                             }
                         }else if(out.equals("access")){
-                            System.out.println("Access Granted.");
+                            callListeners();
                         }
-                        System.out.println(out);
                         s = new StringBuilder();
                     }
                 } catch (IOException e) {
@@ -212,3 +229,4 @@ public class ArduinoConnection {
         this.parity = parity;
     }
 }
+
