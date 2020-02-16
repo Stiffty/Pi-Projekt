@@ -4,6 +4,7 @@
 #include <HCSR04.h>
 #include <SPI.h>
 #include <MFRC522.h>
+
 int ledConnector = 24;
 int ledConnector2 = 22;
 int ledConnector3 = 26;
@@ -23,6 +24,7 @@ UltraSonicDistanceSensor distanceSensor(ultrasonic_Trigger_Pin, ultrasonic_Echo_
 MFRC522 mfrc522(rifd_SS_Pin, rifd_RST_Pin);
 
 Servo myservo;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.setTimeout(20);
@@ -43,14 +45,6 @@ void setup() {
 
   SPI.begin();         // Init SPI bus
   mfrc522.PCD_Init(); // Init MFRC522 card
-}
-
-void blink() {
-  if (digitalRead(ledConnector) == HIGH) {
-    digitalWrite(ledConnector, LOW);
-  } else {
-    digitalWrite(ledConnector, HIGH);
-  }
 }
 
 void schranke(int state) {
@@ -74,13 +68,33 @@ boolean pruefeKey(byte keyIn[]) {
   Serial.write("rifd");
   for (int i = 0; i < 4; i++) {
     while (Serial.available() == 0);
-     byte b = Serial.read();
-     if(b != keyIn[i]){
+    byte b = Serial.read();
+    if (b != keyIn[i]) {
       return false;
-     }
-     
+    }
+
   }
   return true;
+}
+
+void setzteStatus() {
+  while (Serial.available() == 0);
+  String in = Serial.readString();
+
+  if (in == "Voll") {
+    digitalWrite(ledConnector2, HIGH);
+    digitalWrite(ledConnector3, LOW);
+    digitalWrite(ledConnector, LOW);
+  } else if (in == "Mittel") {
+    digitalWrite(ledConnector2, LOW);
+    digitalWrite(ledConnector3, LOW);
+    digitalWrite(ledConnector, HIGH);
+  } else if (in == "Leer") {
+    digitalWrite(ledConnector2, LOW);
+    digitalWrite(ledConnector3, HIGH);
+    digitalWrite(ledConnector, LOW);
+  }
+
 }
 
 void loop() {
@@ -88,12 +102,8 @@ void loop() {
   //wenn ein input über den Seriellen Port kommt
 
   while (Serial.available() > 0) {
-    digitalWrite(ledConnector2, LOW);
     String in = Serial.readString();
 
-    if (in == "blink") {
-      blink();
-    }
     if (in == "open") {
       schranke(1);
     }
@@ -106,20 +116,21 @@ void loop() {
     if (in == "print1") {
       printLcd(1);
     }
+    if (in == "Status") {
+      setzteStatus();
+    }
   }
-  digitalWrite(ledConnector2, HIGH);
-  digitalWrite(ledConnector3, LOW);
-
+  
   if (distanceSensor.measureDistanceCm() < 4) {
     schranke(2);
     // Serial.println("_____________________________________________");
   }
-  
+
   if ( (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())) {
 
-    if(pruefeKey(mfrc522.uid.uidByte) == true){
+    if (pruefeKey(mfrc522.uid.uidByte) == true) {
       Serial.write("access");
-    schranke(1);
+      schranke(1);
     }
 
   }

@@ -25,10 +25,15 @@ public class ArduinoConnection {
     private int stopBits = 1;
     private int parity = 0;
 
-    
+
     private List<RifdAccessEvent> listeners;
 
-    public interface RifdAccessEvent {void rifdAnmeldung();};
+    public interface RifdAccessEvent {
+        void rifdAnmeldung();
+    }
+
+    ;
+
     /**
      * Der Serielle Port wird Konfiguriert
      *
@@ -42,13 +47,13 @@ public class ArduinoConnection {
         //sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0);
     }
 
-    public void addRifdListener(RifdAccessEvent listener){
+    public void addRifdListener(RifdAccessEvent listener) {
         listeners.add(listener);
     }
 
-    private void callListeners(){
-        for (RifdAccessEvent ra: listeners
-             ) {
+    private void callListeners() {
+        for (RifdAccessEvent ra : listeners
+        ) {
             ra.rifdAnmeldung();
         }
     }
@@ -87,15 +92,6 @@ public class ArduinoConnection {
         return sp.closePort();
     }
 
-    /**
-     * Schickt den String "blink" an den im Konstruktor festgelegten und geöffneten Port.
-     *
-     * @param delay Zeit nach dem Senden in ms. Wird addiert mit 21 ms als minimale Wartezeit.
-     */
-    public void blink(int delay) {
-        String in = "blink";
-        send(in, delay);
-    }
 
     /**
      * Schickt den String "open" an den im Konstruktor festgelegten und geöffneten Port.
@@ -119,9 +115,10 @@ public class ArduinoConnection {
 
     /**
      * Sendet ein Codewort und den Text mit min 26 ms delay.
+     *
      * @param delay Delay zwischen den sendungen. Wird zweimal ausgeführt.
-     * @param text Text der auf dem Lcd Display angezeigt wird.
-     * @param line Entweder 1 oder 0. 0 = obere Reihe. 1 = Unterere Reihe.
+     * @param text  Text der auf dem Lcd Display angezeigt wird.
+     * @param line  Entweder 1 oder 0. 0 = obere Reihe. 1 = Unterere Reihe.
      */
     public void printText(int delay, String text, int line) {
         //Abhängig von line wird das passende Schlüsselwort gesendet.
@@ -131,6 +128,22 @@ public class ArduinoConnection {
         send(in, (delay < 5 ? delay + 5 : delay));
         //Sendet den zu zeigenden Text.
         send(text, delay);
+    }
+
+
+    public boolean setStatus(String status, int delay) {
+        if (pruefeStatusString(status)) {
+            send("Status", (delay < 5 ? delay + 5 : delay));
+            send(status, delay);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    private boolean pruefeStatusString(String s) {
+        return s.equals("Voll") || s.equals("Mittel") || s.equals("Leer");
     }
 
     /**
@@ -148,12 +161,12 @@ public class ArduinoConnection {
 
                     if (s.length() != 0 && sp.getInputStream().available() == 0) {
                         String out = s.toString();
-                        if(out.equals("rifd")){
+                        if (out.equals("rifd")) {
                             //send(key.toString(),100);
                             for (byte b : key) {
                                 send(b, 100);
                             }
-                        }else if(out.equals("access")){
+                        } else if (out.equals("access")) {
                             callListeners();
                         }
                         s = new StringBuilder();

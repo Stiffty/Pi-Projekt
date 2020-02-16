@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="ArduinoJava:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ArduinoJava_jar</output-path>
+    <root id="root">
+      <element id="archive" name="ArduinoJava.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$USER_HOME$/Desktop/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="ArduinoJava" />
+      </element>
+      <element id="library" level="project" name="Maven: com.fazecast:jSerialComm:2.5.3" />
+    </root>
+  </artifact>
+</component>
