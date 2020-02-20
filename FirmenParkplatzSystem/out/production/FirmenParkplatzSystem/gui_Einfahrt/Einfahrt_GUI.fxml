@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(176,176,176);">
+         <children>
+            <HBox alignment="CENTER" layoutX="95.9000015258789" layoutY="226.89999389648438" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="TOP" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="132.0" prefWidth="404.0" stylesheets="@Button.css" text="Einparken" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS">
+                     <font>
+                        <Font name="Arial Bold" size="49.0" />
+                     </font>
+                     <effect>
+                        <Lighting diffuseConstant="1.25" specularConstant="0.9" specularExponent="18.6" surfaceScale="2.19">
+                           <bumpInput>
+                              <Shadow blurType="GAUSSIAN" height="29.1575" radius="14.264375" width="29.9">
+                                 <color>
+                                    <Color red="0.06666667014360428" green="0.054901961237192154" blue="0.054901961237192154" />
+                                 </color></Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant azimuth="57.57" elevation="141.29" />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="23.0" left="23.0" right="23.0" top="23.0" />
+               </padding>
+            </HBox>
+            <Separator layoutX="-3.0" layoutY="199.0" prefHeight="20.0" prefWidth="600.0" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="199.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

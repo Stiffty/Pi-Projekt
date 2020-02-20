@@ -1,0 +1,15 @@
+.button {
+    -fx-background-color: rgb(0, 119, 255);
+    -fx-border-width: 10;
+    -fx-border-color: rgba(0, 119, 255, 0.596);
+}
+
+.button:hover {
+    -fx-background-color: rgb(0, 174, 255);
+    -fx-border-color: rgb(0, 174, 255);
+}
+
+.button:pressed {
+    -fx-background-color: rgba(95, 210, 255, 0.74);
+    -fx-border-color: rgba(95, 191, 255, 0.966);
+}
