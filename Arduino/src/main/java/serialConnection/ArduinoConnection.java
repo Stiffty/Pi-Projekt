@@ -15,7 +15,7 @@ public class ArduinoConnection {
 
     /*
      * ToDo:
-     *  - restlichen Funktionen implementieren
+     *  - restlichen Funktionen implementieren.
      * */
 
     private SerialPort sp;
@@ -32,7 +32,6 @@ public class ArduinoConnection {
         void rifdAnmeldung();
     }
 
-    ;
 
     /**
      * Der Serielle Port wird Konfiguriert
