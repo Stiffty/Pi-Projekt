@@ -19,7 +19,9 @@ public class Test_ArduinoConnection {
 
         ac.printText(100,"Hallo Welt",0);
         ac.printText(100,"hi",1);
-        ac.printText(0,"Haaa",0);
+        ac.printText(100,"Haaa",0);
+
+        ac.setStatus("Voll", 10);
 
         while (true);
         //System.out.println(ac.closePort());
