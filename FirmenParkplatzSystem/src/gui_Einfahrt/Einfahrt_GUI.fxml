@@ -8,7 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui_Einfahrt.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -20,7 +20,7 @@
          <children>
             <HBox alignment="CENTER" layoutX="95.9000015258789" layoutY="226.89999389648438" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="TOP" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="132.0" prefWidth="404.0" stylesheets="@Button.css" text="Einparken" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS">
+                  <Button fx:id="einparken_Button" alignment="CENTER" contentDisplay="TOP" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#clicked_Einparken" prefHeight="132.0" prefWidth="404.0" stylesheets="@Button.css" text="Einparken" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS">
                      <font>
                         <Font name="Arial Bold" size="49.0" />
                      </font>
@@ -46,7 +46,28 @@
                   <Insets bottom="23.0" left="23.0" right="23.0" top="23.0" />
                </padding>
             </HBox>
-            <Separator layoutX="-3.0" layoutY="199.0" prefHeight="20.0" prefWidth="600.0" AnchorPane.bottomAnchor="181.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="199.0" />
+            <HBox alignment="CENTER" layoutX="26.0" layoutY="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="44.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="TOP" ellipsisString="...." prefHeight="82.0" prefWidth="548.0" styleClass="hbox" stylesheets="@Button.css" text="Willkommen in unserem Parkhaus.">
+                     <font>
+                        <Font name="Agency FB Bold" size="34.0" />
+                     </font>
+                     <rotationAxis>
+                        <Point3D x="1.0" y="1.0" z="1.0" />
+                     </rotationAxis>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </children>

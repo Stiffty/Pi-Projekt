@@ -13,3 +13,9 @@
     -fx-background-color: rgba(95, 210, 255, 0.74);
     -fx-border-color: rgba(95, 191, 255, 0.966);
 }
+
+.hbox {
+    -fx-border-width: 5;
+    -fx-border-color: rgb(206, 214, 223);
+    -fx-background-radius: 100px;
+}
