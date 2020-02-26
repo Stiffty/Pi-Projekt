@@ -7,7 +7,7 @@ import java.net.Socket;
 public class Main {
     public static void main(String[] args)  {
         try {
-            ServerSocket serverSocket = new ServerSocket(6666);
+            ServerSocket serverSocket = new ServerSocket(9669);
 
 
             Socket clientSocket = serverSocket.accept();
@@ -18,6 +18,7 @@ public class Main {
             DataOutputStream dOUT = new DataOutputStream(clientSocket.getOutputStream());
 
             while (true) {
+                while (dIN.available() == 0);
                 System.out.println(dIN.readUTF());
             }
         }catch (Exception e){

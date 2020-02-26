@@ -1,7 +1,8 @@
 package protokoll;
 
 public enum Einfahrt {
-    NEUESFAHRZEUG (1L);
+    FAHRZEUG_ANMELDEN(1L),
+    FAHRZEUG_ABMELDEN(2L);
 
     private Long in;
     Einfahrt(Long i) {
