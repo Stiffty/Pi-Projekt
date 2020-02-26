@@ -12,14 +12,13 @@ public class Controller {
 
     public Controller() {
         main = new Main();
+        main.sendeNeuesFahrzeug();
         //main start Connection
     }
 
     public static void main(String[] args) {
 
-        new Thread(()->{
-            Application.launch(GUI_Einfahrt.class);
-        }).start();
+        Application.launch(GUI_Einfahrt.class);
 
         new Controller();
     }
