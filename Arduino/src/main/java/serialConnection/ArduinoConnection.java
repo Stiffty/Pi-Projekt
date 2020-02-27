@@ -36,7 +36,7 @@ public class ArduinoConnection {
     /**
      * Der Serielle Port wird Konfiguriert
      *
-     * @param port Name des Seriellen Ports*
+     * @param port Name des Seriellen Ports
      */
     public ArduinoConnection(String port) {
         sp = SerialPort.getCommPort(port);

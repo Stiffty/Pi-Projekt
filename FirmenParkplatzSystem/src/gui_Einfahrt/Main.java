@@ -21,6 +21,7 @@ public class Main {
             dIN = new DataInputStream(clientSocket.getInputStream());
             dOUT = new DataOutputStream(clientSocket.getOutputStream());
 
+            dOUT.writeUTF("Einfahrt");
 
         } catch (Exception e) {
             e.printStackTrace();

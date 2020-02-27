@@ -12,7 +12,6 @@ public class Controller {
 
     public Controller() {
         main = new Main();
-        main.sendeNeuesFahrzeug();
         //main start Connection
     }
 
