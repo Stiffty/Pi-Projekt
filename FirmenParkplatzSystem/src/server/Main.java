@@ -53,6 +53,7 @@ public class Main {
 
                 System.out.printf("> %s %s Connected.%n", type,index+1);
 
+                //Keywords von den Guis
                 switch (type){
                     case "Einfahrt":
                         einfahrtAbfragen(out,in);
