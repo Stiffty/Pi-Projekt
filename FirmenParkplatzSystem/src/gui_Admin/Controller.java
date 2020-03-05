@@ -12,8 +12,10 @@ public class Controller {
     public Button showText;
     public TextArea textField;
 
-    private int counter;
+    private Main main;
+
     public Controller() {
+        main = new Main();
     }
 
     public static void main(String[] args) {
@@ -22,21 +24,12 @@ public class Controller {
 
         new Controller();
     }
-    public void zeigeText(MouseEvent mouseEvent) {
-        for (int i = 0; i < 500; i++) {
-            print(String.valueOf(counter) + "   " + String.valueOf(text.length()));
-        }
+
+    public void initialize() {
+        main.starteListener(textField);
     }
 
-    private String text = new String();
-    public void print(String in){
-        if (counter++ == 1000) {
-            textField.setText(text.substring(text.length()/2,text.length()));
-            counter = 500;
-        }
-        
-        text = textField.getText() + "\n";
-        textField.setText(text + "> " +in);
-        textField.setScrollTop(100000000);
+    public void zeigeText(MouseEvent mouseEvent) {
     }
+
 }
