@@ -30,9 +30,29 @@ public class Main {
 
     public void sendeNeuesFahrzeug() {
         try {
-            dOUT.writeUTF(String.valueOf(Einfahrt.FAHRZEUG_ANMELDEN));
+            if (checkIfFull()) {
+                dOUT.writeUTF(String.valueOf(Einfahrt.FAHRZEUG_ANMELDEN));
+            } else {
+                dOUT.writeUTF(String.valueOf(Einfahrt.ERROR001));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean checkIfFull(){
+        try {
+            dOUT.writeUTF(String.valueOf(Einfahrt.ISTPARKHAUSVOLL));
+            while (dIN.available() == 0);
+            String answer = dIN.readUTF();
+            if (answer.equals(String.valueOf(Einfahrt.PARKHAUSISTNICHTVOLL))) {
+                return true;
+            }else{
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
