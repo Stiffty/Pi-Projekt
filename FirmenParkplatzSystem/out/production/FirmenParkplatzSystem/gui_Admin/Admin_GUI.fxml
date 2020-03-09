@@ -28,5 +28,15 @@
             <Button fx:id="showText" layoutX="106.0" layoutY="44.0" mnemonicParsing="false" onMouseClicked="#zeigeText" prefHeight="45.0" prefWidth="88.0" text="Show Text" />
          </children>
       </AnchorPane>
+      <AnchorPane GridPane.columnIndex="1">
+         <children>
+            <TableView fx:id="Parkplätze" prefHeight="129.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <columns>
+                  <TableColumn prefWidth="66.0" text="Nummer" />
+                  <TableColumn prefWidth="229.0" resizable="false" text="Status" />
+               </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
    </children>
 </GridPane>
