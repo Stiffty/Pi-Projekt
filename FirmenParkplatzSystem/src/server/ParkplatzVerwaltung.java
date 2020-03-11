@@ -33,4 +33,5 @@ public class ParkplatzVerwaltung {
                 parkplätze.get(parkplätze.size()-1).setVermietet(true);
         }
     }
+
 }

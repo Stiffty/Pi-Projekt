@@ -1,0 +1,150 @@
+﻿[Files]
+File0=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\gui_Admin\Controller.java
+File1=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\gui_Admin\GUI_Admin.java
+File2=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\gui_Admin\Main.java
+File3=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\gui_Einfahrt\Controller.java
+File4=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\gui_Einfahrt\GUI_Einfahrt.java
+File5=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\gui_Einfahrt\Main.java
+File6=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\server\Main.java
+File7=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\server\ParkplatzVerwaltung.java
+File8=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\server\Verwaltung\Parkplatz.java
+File9=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\server\Verwaltung\Preisliste.java
+File10=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\server\Verwaltung\RifdKarte.java
+File11=C:\Users\achtniel\Documents\GitHub\Pi-Projekt\FirmenParkplatzSystem\src\server\Verwaltung\Status.java
+
+[Box:  - gui_Admin.Controller]
+X=2777
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - gui_Admin.data]
+X=2437
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - gui_Admin.GUI_Admin]
+X=3361
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - gui_Admin.Main]
+X=3080
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - gui_Einfahrt.Controller]
+X=1842
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - gui_Einfahrt.GUI_Einfahrt]
+X=1595
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - gui_Einfahrt.Main]
+X=2206
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - server.Main]
+X=285
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - server.ParkplatzVerwaltung]
+X=20
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - server.Verwaltung.Parkplatz]
+X=1047
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - server.Verwaltung.Preisliste]
+X=781
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Box:  - server.Verwaltung.RifdKarte]
+X=1327
+Y=40
+MinVis=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+FontSize=12
+FontName=Segoe UI
+
+[Diagram]
+comments=0
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowParameter=4
+SortOrder=0
+ShowIcons=1
+ShowConnections=0
+Fontname=Segoe UI
+Fontsize=12
+ShowObjectDiagram=0
+
+[Interactive]
+I0=
+
