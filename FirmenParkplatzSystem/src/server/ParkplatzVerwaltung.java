@@ -2,7 +2,7 @@ package server;
 
 import server.Verwaltung.Parkplatz;
 import server.Verwaltung.Preisliste;
-import server.Verwaltung.RifdKarte;
+import server.Verwaltung.Parkticket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 public class ParkplatzVerwaltung {
 
     private List<Parkplatz> parkplätze;
-    private List<RifdKarte> rifdKarten;
+    private List<Parkticket> rifdKarten;
     private static Preisliste preisliste;
 
     public ParkplatzVerwaltung() {
