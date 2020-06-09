@@ -1,5 +1,7 @@
 package server.Verwaltung;
 
+import verwaltung_Parkplatz.Status;
+
 public class Parkplatz {
     private String status;
     private boolean isVermietet;

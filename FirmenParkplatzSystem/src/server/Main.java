@@ -1,6 +1,7 @@
 package server;
 
 import protokoll.Einfahrt;
+import verwaltung_Parkplatz.Controller;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -12,12 +13,13 @@ import java.util.Scanner;
 public class Main {
 
     ServerSocket serverSocket;
-
+    static Controller controller;
     List<String> textToAdmin = new ArrayList<>();
 
     public Main() {
         try {
             serverSocket = new ServerSocket(9669);
+            controller = new Controller(40, 10);
 
             warteaufAdmin();
             warteAufEinfahrt();
@@ -27,23 +29,31 @@ public class Main {
     }
 
 
-    private void warteaufAdmin(){
+    private void warteaufAdmin() {
         try {
             String type = new String();
             System.out.println("> Bitte Connecten Sie min. ein Admin Panel. ");
             Socket clientSocket;
-            do{
+            ObjectOutputStream out;
+            ObjectInputStream in;
+            do {
                 clientSocket = serverSocket.accept();
 
-                DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+                out = new ObjectOutputStream(clientSocket.getOutputStream());
+                in = new ObjectInputStream(clientSocket.getInputStream());
 
+                while (in.available() == 0) {
+                    Thread.sleep(100);
+                    System.out.println(clientSocket.isConnected());
+                }
+                System.out.println(4);
                 type = in.readUTF();
             }
             while (!type.equals("Admin"));
 
-            stelleVerbindungMitClientHer(clientSocket,0,type);
+            stelleVerbindungMitClientHer(clientSocket, 0, type, in, out);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -59,21 +69,24 @@ public class Main {
         for (int i = 0; i < einfahrt; i++) {
             try {
                 Socket clientSocket = serverSocket.accept();
-                DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-                stelleVerbindungMitClientHer(clientSocket, i,in.readUTF());
+                ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
+                ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
+                stelleVerbindungMitClientHer(clientSocket, i, in.readUTF(), in, out);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void stelleVerbindungMitClientHer(Socket client, int index,String id) {
+    private void stelleVerbindungMitClientHer(Socket client, int index, String id, ObjectInputStream in, ObjectOutputStream out) {
         new Thread(() -> {
             String type = id;
 
             try {
-                DataInputStream in = new DataInputStream(client.getInputStream());
-                DataOutputStream out = new DataOutputStream(client.getOutputStream());
+                //ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
+                //ObjectInputStream in = new ObjectInputStream(client.getInputStream());
+                //DataInputStream in = new DataInputStream(client.getInputStream());
+                // out = new DataOutputStream(client.getOutputStream());
 
 
                 System.out.printf("> %s %s Connected.%n", type, index + 1);
@@ -81,11 +94,11 @@ public class Main {
                 //Keywords von den Guis
                 switch (type) {
                     case "Einfahrt":
-                        textToAdmin.add("Neue Einfahrt Verbunden: "+type+index);
+                        textToAdmin.add("Neue Einfahrt Verbunden: " + type + " " + (index + 1));
                         einfahrtAbfragen(out, in);
                         break;
                     case "Admin":
-                        admintest(out, in);
+                        admintest(out);
                         break;
                 }
 
@@ -95,22 +108,39 @@ public class Main {
         }).start();
     }
 
-    public void admintest(DataOutputStream out, DataInputStream in) throws IOException {
+    private boolean adminUpdate = true;
+
+    public void admintest(ObjectOutputStream out) throws IOException {
+
+        out.writeUTF("TEXT");
         out.writeUTF("Connected.");
+        out.flush();
         int index = -1;
 
         if (textToAdmin.size() - 1 >= 0) {
             for (String text : textToAdmin
             ) {
                 out.writeUTF(text);
+                out.flush();
             }
             index = textToAdmin.size() - 1;
         }
-
         while (true) {
             int size = textToAdmin.size() - 1;
+            if (adminUpdate) {
+                out.writeUTF("DATA");
+                for (int i = 0; i < Controller.parkplätze.length(); i++) {
+                    System.out.println(Controller.parkplätze.get(i).getId() + " " +Controller.parkplätze.get(i).getStatus());
+                }
+                out.writeObject(Controller.parkplätze);
+                out.flush();
+                adminUpdate = false;
+                System.out.println("Admin updated");
+            }
             if (size != index && size >= 0) {
+                out.writeUTF("TEXT");
                 out.writeUTF(textToAdmin.get(size));
+                out.flush();
                 index = size;
             } else {
                 try {
@@ -122,7 +152,7 @@ public class Main {
         }
     }
 
-    public void einfahrtAbfragen(DataOutputStream out, DataInputStream in) throws IOException, InterruptedException {
+    public void einfahrtAbfragen(ObjectOutputStream out, ObjectInputStream in) throws IOException, InterruptedException {
 
         while (true) {
             //Abfragen von server
@@ -134,12 +164,15 @@ public class Main {
 
             if (code.equals(String.valueOf(Einfahrt.FAHRZEUG_ANMELDEN))) {
                 //Routine
+                controller.belegeParkplatz(-1);
+                adminUpdate = true;
                 textToAdmin.add("Neues Fahrzeug hat sich angemeldet.");
 
             } else if (code.equals(String.valueOf(Einfahrt.ISTPARKHAUSVOLL))) {
 
                 textToAdmin.add("Status Request von Einfahrt.");
                 out.writeUTF(String.valueOf(Einfahrt.PARKHAUSISTNICHTVOLL));
+                out.flush();
 
             } else if (code.equals(String.valueOf(Einfahrt.ERROR001))) {
 

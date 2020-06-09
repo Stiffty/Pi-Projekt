@@ -1,6 +1,8 @@
 package eigene_Datenstrukturen.list;
 
-public class Node {
+import java.io.Serializable;
+
+public class Node implements Serializable {
     private Node last;
     private Node next;
     private Object data;

@@ -1,4 +1,4 @@
-package server.Verwaltung;
+package verwaltung_Parkplatz;
 
 public enum Status {
     //Status für Parkplätze

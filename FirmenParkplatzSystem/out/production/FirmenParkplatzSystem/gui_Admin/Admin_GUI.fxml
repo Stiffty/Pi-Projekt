@@ -32,8 +32,6 @@
          <children>
             <TableView fx:id="Parkplätze" prefHeight="129.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columns>
-                  <TableColumn prefWidth="66.0" text="Nummer" />
-                  <TableColumn prefWidth="229.0" resizable="false" text="Status" />
                </columns>
             </TableView>
          </children>

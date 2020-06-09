@@ -1,6 +1,8 @@
 package eigene_Datenstrukturen.list;
 
-public class List<E> {
+import java.io.Serializable;
+
+public class List<E> implements Serializable {
     private Node head;
     private Node tail;
     private int length = 0;
