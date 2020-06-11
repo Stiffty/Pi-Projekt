@@ -10,12 +10,14 @@ import java.io.IOException;
 
 public class GUI_Ausfahrt extends Application {
 
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+
         primaryStage.setTitle("Einfahrt");
         primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(600);

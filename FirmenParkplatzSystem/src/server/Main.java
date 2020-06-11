@@ -8,15 +8,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
 
-    ServerSocket serverSocket;
-    static Controller controller;
-    List<String> textToAdmin = new ArrayList<>();
+    private ServerSocket serverSocket;
+    public static Controller controller;
+    private List<String> textToAdmin;
+    private Random rand;
 
     public Main() {
+        rand = new Random();
+        textToAdmin = new ArrayList<>();
         try {
             serverSocket = new ServerSocket(9669);
             controller = new Controller(40, 10);
@@ -109,6 +113,8 @@ public class Main {
     }
 
     private boolean adminUpdate = true;
+    private int updateid = -1;
+    private String state = "FREI";
 
     public void admintest(ObjectOutputStream out) throws IOException {
 
@@ -128,14 +134,27 @@ public class Main {
         while (true) {
             int size = textToAdmin.size() - 1;
             if (adminUpdate) {
-                out.writeUTF("DATA");
-                for (int i = 0; i < Controller.parkplätze.length(); i++) {
-                    System.out.println(Controller.parkplätze.get(i).getId() + " " +Controller.parkplätze.get(i).getStatus());
+                if(updateid == -1) {
+                    out.writeUTF("DATA");
+
+                    for (int i = 0; i < Controller.parkplätze.length(); i++) {
+                        System.out.println(Controller.parkplätze.get(i).getId() + " " + Controller.parkplätze.get(i).getStatus());
+                    }
+
+                    out.writeObject(Controller.parkplätze);
+
+                    adminUpdate = false;
+                    System.out.println("Admin updated");
+                }else{
+                    out.writeUTF("UPDATE");
+                    out.writeInt(updateid);
+                    System.out.println(Controller.parkplätze.get(updateid).getStatus() + " <-");
+                    out.writeUTF(state);
+
+                    adminUpdate = false;
+                    updateid = -1;
+                    System.out.println("Admin updated");
                 }
-                out.writeObject(Controller.parkplätze);
-                out.flush();
-                adminUpdate = false;
-                System.out.println("Admin updated");
             }
             if (size != index && size >= 0) {
                 out.writeUTF("TEXT");
@@ -164,7 +183,9 @@ public class Main {
 
             if (code.equals(String.valueOf(Einfahrt.FAHRZEUG_ANMELDEN))) {
                 //Routine
-                controller.belegeParkplatz(-1);
+                updateid = rand.nextInt(Controller.parkplätze.length());
+                state = "BELEGT";
+                controller.belegeParkplatz(updateid);
                 adminUpdate = true;
                 textToAdmin.add("Neues Fahrzeug hat sich angemeldet.");
 

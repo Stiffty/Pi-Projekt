@@ -4,9 +4,11 @@ import eigene_Datenstrukturen.list.List;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import verwaltung_Parkplatz.Parkplatz;
+import verwaltung_Parkplatz.Status;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -16,7 +18,7 @@ public class Main {
     //private DataOutputStream dOUT;
     private ObjectOutputStream dOUT;
     private ObjectInputStream dIN;
-    private List<Parkplatz> parkplätze;
+    private java.util.List<Parkplatz> parkplätze;
 
     Controller controller;
 
@@ -62,23 +64,28 @@ public class Main {
                         textField.setScrollTop(100000000);
                     } else if (in.equals("DATA")) {
                         System.out.printf("called: %s,%n", dIN.available());
-                        //while (dIN.available() == 0);
+                       // while (dIN.available() == 0);
 
-                        parkplätze = (List<Parkplatz>) dIN.readObject();
+                        List<Parkplatz> p = (List<Parkplatz>) dIN.readObject();
+                        parkplätze = new ArrayList<>();
 
-                        for (int i = 0; i < parkplätze.length(); i++) {
-                            System.out.println(i + " " + parkplätze.get(i).getStatus());
-                        }
-
-                        //controller.data.clear();
-                        for (int i = 0; i < parkplätze.length(); i++) {
-                            var d = parkplätze.get(i);
-                            var p = new Controller.Parkplatz(d.getId(), d.getStatus().name(), d.isMietet());
+                        controller.data.clear();
+                        for (int i = 0; i < p.length(); i++) {
+                            var d = p.get(i);
+                            parkplätze.add(d);
+                            var u = new Controller.Parkplatz(d.getId(), d.getStatus().name(), d.isMietet());
                             System.out.println(d.getStatus().name() + " " + i);
-                            controller.data.add(p);
+                            controller.data.add(u);
                             controller.Parkplätze.setItems(controller.data);
                         }
-                        parkplätze = null;
+                    }else if(in.equals("UPDATE")){
+                        int index = dIN.readInt();
+                        String state = dIN.readUTF();
+                        Parkplatz park = parkplätze.get(index);
+
+                        var pp = new Controller.Parkplatz(park.getId(), state, park.isMietet());
+                        controller.data.set(index, pp);
+                        controller.Parkplätze.setItems(controller.data);
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {

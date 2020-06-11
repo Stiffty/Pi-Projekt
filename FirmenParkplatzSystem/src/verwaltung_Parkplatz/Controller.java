@@ -11,12 +11,13 @@ public class Controller {
     private Random rand;
 
     public Controller(int anzahlParkplätze, int anzahlMietParkplätze) {
+        System.out.println("Ttt");
         parkplätze = new List<>();
         rand = new Random();
         this.anzahlParkplätze = anzahlParkplätze;
         this.anzahlMietParkplätze = anzahlMietParkplätze;
         for (int i = 0; i < anzahlMietParkplätze; i++) {
-            parkplätze.add(new Parkplatz(parkplätze.length(), Status.BELEGT, true));
+            parkplätze.add(new Parkplatz(parkplätze.length(), Status.FREI, true));
         }
         for (int i = 0; i < anzahlParkplätze; i++) {
             parkplätze.add(new Parkplatz(parkplätze.length(), Status.FREI, false));
@@ -30,7 +31,7 @@ public class Controller {
             parkplätze.get(i).setStatus(Status.BELEGT);
         else
             parkplätze.get(id).setStatus(Status.BELEGT);
-        System.out.println(i + " " + parkplätze.get(i).getStatus() + " " +  parkplätze.get(i).getId());
+        System.out.println(id + " " + parkplätze.get(id).getStatus() + " " +  parkplätze.get(id).getId());
     }
 
     public void parkplatzDefekt(int id) {
