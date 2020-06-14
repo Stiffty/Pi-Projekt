@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Point3D?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.Cursor?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
-<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui_Einfahrt.Controller">
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui_bezahlen.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -22,7 +20,7 @@
          <children>
             <HBox alignment="CENTER" layoutX="95.9000015258789" layoutY="226.89999389648438" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <Button fx:id="einparken_Button" alignment="CENTER" contentDisplay="TOP" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#clicked_Einparken" prefHeight="132.0" prefWidth="404.0" stylesheets="@Button.css" text="Einparken" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS">
+                  <Button fx:id="einparken_Button" alignment="CENTER" contentDisplay="TOP" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#clicked_Einparken" prefHeight="132.0" prefWidth="404.0" stylesheets="@Button.css" text="Bezahlen" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS">
                      <font>
                         <Font name="Arial Bold" size="49.0" />
                      </font>
@@ -50,7 +48,7 @@
             </HBox>
             <HBox alignment="CENTER" layoutX="26.0" layoutY="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="44.0">
                <children>
-                  <Label alignment="CENTER" contentDisplay="TOP" ellipsisString="...." prefHeight="82.0" prefWidth="548.0" styleClass="hbox" stylesheets="@Button.css" text="Willkommen in unserem Parkhaus.">
+                  <Label alignment="CENTER" contentDisplay="TOP" ellipsisString="...." prefHeight="82.0" prefWidth="548.0" styleClass="hbox" stylesheets="@Button.css" text="Bezahl Automat">
                      <font>
                         <Font name="Agency FB Bold" size="34.0" />
                      </font>
@@ -79,9 +77,49 @@
                   </Label>
                </children>
             </HBox>
+            <HBox AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="151.0">
+               <children>
+                  <Separator opacity="0.0" prefWidth="70.0" />
+                  <Label text="Preis:">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="151.0">
+               <children>
+                  <Label text="Zeit:">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator opacity="0.0" prefWidth="70.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+               <children>
+                  <Label fx:id="zeit">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Label>
+                  <Separator opacity="0.0" prefWidth="70.0" />
+               </children>
+            </HBox>
+            <HBox AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+               <children>
+                  <Separator opacity="0.0" prefWidth="70.0" />
+                  <Label fx:id="preis">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <HBox alignment="CENTER" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
                <children>
-                  <TextField fx:id="codeField" alignment="CENTER" editable="false" promptText="Code" text="Code">
+                  <TextField fx:id="codeField" alignment="CENTER" promptText="Code" text="Code">
                      <font>
                         <Font size="14.0" />
                      </font>

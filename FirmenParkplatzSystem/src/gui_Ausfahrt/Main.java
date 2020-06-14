@@ -1,6 +1,6 @@
 package gui_Ausfahrt;
 
-import protokoll.Einfahrt;
+import protokoll.Protokoll;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,7 +23,9 @@ public class Main {
             dIN = new ObjectInputStream(clientSocket.getInputStream());
             dOUT = new ObjectOutputStream(clientSocket.getOutputStream());
 
-            dOUT.writeUTF("Einfahrt");
+            String send = "Ausfahrt";
+            System.out.println(send);
+            dOUT.writeUTF(send);
             dOUT.flush();
 
         } catch (Exception e) {
@@ -31,33 +33,12 @@ public class Main {
         }
     }
 
-    public void sendeNeuesFahrzeug() {
+    public void FahrzeugAbmelden() {
         try {
-            if (checkIfFull()) {
-                dOUT.writeUTF(String.valueOf(Einfahrt.FAHRZEUG_ANMELDEN));
-            } else {
-                dOUT.writeUTF(String.valueOf(Einfahrt.ERROR001));
-            }
+            dOUT.writeUTF(String.valueOf(Protokoll.FAHRZEUG_ABMELDEN));
             dOUT.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private boolean checkIfFull(){
-        try {
-            dOUT.writeUTF(String.valueOf(Einfahrt.ISTPARKHAUSVOLL));
-            dOUT.flush();
-            while (dIN.available() == 0);
-            String answer = dIN.readUTF();
-            if (answer.equals(String.valueOf(Einfahrt.PARKHAUSISTNICHTVOLL))) {
-                return true;
-            }else{
-                return false;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 }

@@ -30,10 +30,50 @@
       </AnchorPane>
       <AnchorPane GridPane.columnIndex="1">
          <children>
-            <TableView fx:id="Parkplätze" prefHeight="129.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="Parkplätze" editable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columns>
                </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <HBox layoutY="23.0" AnchorPane.bottomAnchor="115.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+               <children>
+                  <Separator opacity="0.0" prefWidth="10.0" />
+                  <Label text="Freie Parkplätze:" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Separator opacity="0.0" prefWidth="60.0" />
+                  <Label prefHeight="20.0" prefWidth="134.0" text="Belegte Parkplätze:" textAlignment="RIGHT">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="14.0" layoutY="59.0" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="59.0">
+               <children>
+                  <Label fx:id="frei" text="Label">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Separator opacity="0.0" prefWidth="200.0" />
+                  <Label fx:id="belegt" text="Label">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator layoutX="144.0" layoutY="-21.0" orientation="VERTICAL" prefHeight="179.0" prefWidth="3.0" />
+            <Separator layoutY="43.0" prefHeight="3.0" prefWidth="300.0" />
          </children>
       </AnchorPane>
    </children>

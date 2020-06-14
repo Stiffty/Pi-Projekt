@@ -1,9 +1,12 @@
 package gui_Einfahrt;
 
-import protokoll.Einfahrt;
+import protokoll.Protokoll;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Date;
 
 
 public class Main {
@@ -13,8 +16,10 @@ public class Main {
     private ObjectInputStream dIN;
     private ObjectOutputStream dOUT;
 
+    private Controller controller;
 
-    public Main() {
+    public Main(Controller con) {
+        controller = con;
         try {
             clientSocket = new Socket("127.0.0.1", 9669);
 
@@ -32,9 +37,12 @@ public class Main {
     public void sendeNeuesFahrzeug() {
         try {
             if (checkIfFull()) {
-                dOUT.writeUTF(String.valueOf(Einfahrt.FAHRZEUG_ANMELDEN));
+                dOUT.writeUTF(String.valueOf(Protokoll.FAHRZEUG_ANMELDEN));
+                dOUT.flush();
+                System.out.println("Send" + new Date().getTime());
+                controller.setTextFieldCode(dIN.readInt());
             } else {
-                dOUT.writeUTF(String.valueOf(Einfahrt.ERROR001));
+                dOUT.writeUTF(String.valueOf(Protokoll.ERROR001));
             }
             dOUT.flush();
         } catch (IOException e) {
@@ -44,11 +52,11 @@ public class Main {
 
     private boolean checkIfFull(){
         try {
-            dOUT.writeUTF(String.valueOf(Einfahrt.ISTPARKHAUSVOLL));
+            dOUT.writeUTF(String.valueOf(Protokoll.ISTPARKHAUSVOLL));
             dOUT.flush();
             while (dIN.available() == 0);
             String answer = dIN.readUTF();
-            if (answer.equals(String.valueOf(Einfahrt.PARKHAUSISTNICHTVOLL))) {
+            if (answer.equals(String.valueOf(Protokoll.PARKHAUSISTNICHTVOLL))) {
                 return true;
             }else{
                 return false;

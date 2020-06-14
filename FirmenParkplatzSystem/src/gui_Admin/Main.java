@@ -41,7 +41,8 @@ public class Main {
             e.printStackTrace();
         }
     }
-
+    private int frei = 0;
+    private int belegt = 0;
     public void starteListener(TextArea textField) {
         new Thread(() -> {
             try {
@@ -63,6 +64,7 @@ public class Main {
                         textField.setText(text + "> " + dIN.readUTF());
                         textField.setScrollTop(100000000);
                     } else if (in.equals("DATA")) {
+
                         System.out.printf("called: %s,%n", dIN.available());
                        // while (dIN.available() == 0);
 
@@ -73,19 +75,36 @@ public class Main {
                         for (int i = 0; i < p.length(); i++) {
                             var d = p.get(i);
                             parkplätze.add(d);
+
+                            if (d.getStatus().name().equals("FREI"))
+                                frei++;
+                            else if (d.getStatus().name().equals("BELEGT"))
+                                belegt++;
+
                             var u = new Controller.Parkplatz(d.getId(), d.getStatus().name(), d.isMietet());
-                            System.out.println(d.getStatus().name() + " " + i);
                             controller.data.add(u);
                             controller.Parkplätze.setItems(controller.data);
                         }
+                        controller.setBelegt(belegt);
+                        controller.setfrei(frei);
                     }else if(in.equals("UPDATE")){
                         int index = dIN.readInt();
                         String state = dIN.readUTF();
                         Parkplatz park = parkplätze.get(index);
 
+                        if(state.equals("FREI")) {
+                            frei++;
+                            belegt--;
+                        }else if (state.equals("BELEGT")){
+                            frei--;
+                            belegt++;
+                        }
+
                         var pp = new Controller.Parkplatz(park.getId(), state, park.isMietet());
                         controller.data.set(index, pp);
                         controller.Parkplätze.setItems(controller.data);
+                        controller.setBelegt(belegt);
+                        controller.setfrei(frei);
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {

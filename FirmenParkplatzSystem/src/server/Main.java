@@ -1,15 +1,14 @@
 package server;
 
-import protokoll.Einfahrt;
+import protokoll.Protokoll;
 import verwaltung_Parkplatz.Controller;
+import verwaltung_Parkplatz.Status;
+import verwaltung_Parkplatz.Ticket;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -26,7 +25,9 @@ public class Main {
             controller = new Controller(40, 10);
 
             warteaufAdmin();
+            warteAufAusfahrt();
             warteAufEinfahrt();
+            warteAufBezahlautomat();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,12 +71,39 @@ public class Main {
         einfahrt = sc.nextInt();
 
         System.out.printf("> Warte auf %s Einfahrtautomaten.%n", einfahrt);
-        for (int i = 0; i < einfahrt; i++) {
+        waitForClient(einfahrt);
+    }
+
+    private void warteAufAusfahrt() {
+        Scanner sc = new Scanner(System.in);
+        int ausfahrt;
+
+        System.out.printf("> Wie viele Ausfahrtautomaten sollen angeschlossen werden?%n>> ");
+        ausfahrt = sc.nextInt();
+
+        System.out.printf("> Warte auf %s Ausfahrtautomaten.%n", ausfahrt);
+        waitForClient(ausfahrt);
+    }
+
+    private void warteAufBezahlautomat() {
+        Scanner sc = new Scanner(System.in);
+        int bezahlautomat;
+
+        System.out.printf("> Wie viele Bezahlautomaten sollen angeschlossen werden?%n>> ");
+        bezahlautomat = sc.nextInt();
+
+        System.out.printf("> Warte auf %s  Bezahlautomaten.%n", bezahlautomat);
+        waitForClient(bezahlautomat);
+    }
+
+    private void waitForClient(int index) {
+        for (int i = 0; i < index; i++) {
             try {
                 Socket clientSocket = serverSocket.accept();
                 ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
                 ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
-                stelleVerbindungMitClientHer(clientSocket, i, in.readUTF(), in, out);
+                String type = in.readUTF();
+                stelleVerbindungMitClientHer(clientSocket, i, type, in, out);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -100,6 +128,14 @@ public class Main {
                     case "Einfahrt":
                         textToAdmin.add("Neue Einfahrt Verbunden: " + type + " " + (index + 1));
                         einfahrtAbfragen(out, in);
+                        break;
+                    case "Ausfahrt":
+                        textToAdmin.add("Neue Ausfahrt Verbunden: " + type + " " + (index + 1));
+                        ausfahrtAbfragen(out, in);
+                        break;
+                    case "Bezahlen":
+                        textToAdmin.add("Neuer BezahlAutomat Verbunden: " + type + " " + (index + 1));
+                        bezahlAutomatAbfragen(out, in);
                         break;
                     case "Admin":
                         admintest(out);
@@ -144,16 +180,13 @@ public class Main {
                     out.writeObject(Controller.parkplätze);
 
                     adminUpdate = false;
-                    System.out.println("Admin updated");
                 }else{
                     out.writeUTF("UPDATE");
                     out.writeInt(updateid);
-                    System.out.println(Controller.parkplätze.get(updateid).getStatus() + " <-");
                     out.writeUTF(state);
 
                     adminUpdate = false;
                     updateid = -1;
-                    System.out.println("Admin updated");
                 }
             }
             if (size != index && size >= 0) {
@@ -171,6 +204,53 @@ public class Main {
         }
     }
 
+    public void bezahlAutomatAbfragen(ObjectOutputStream out, ObjectInputStream in) throws IOException, InterruptedException {
+
+        while (true) {
+            //Abfragen von server
+            while (in.available() == 0) {
+                Thread.sleep(10);
+            }
+
+            String code = in.readUTF();
+
+            if (code.equals(String.valueOf(Protokoll.BEZAHLEN))) {
+                //Routine
+                int id = in.readInt();
+
+                String date = controller.getParkTimeForId(id);
+                out.writeUTF(Objects.requireNonNullElseGet(date, Protokoll.ERROR002::name));
+                out.writeDouble(controller.getPreisForParkdauer(id));
+                out.flush();
+            }
+        }
+    }
+
+    public void ausfahrtAbfragen(ObjectOutputStream out, ObjectInputStream in) throws IOException, InterruptedException {
+
+        while (true) {
+            //Abfragen von server
+            while (in.available() == 0) {
+                Thread.sleep(10);
+            }
+
+            String code = in.readUTF();
+
+            if (code.equals(String.valueOf(Protokoll.FAHRZEUG_ABMELDEN))) {
+                //Routine
+                for (int i = 0; i < controller.parkplätze.length(); i++) {
+                    if(controller.parkplätze.get(i).getStatus().equals(Status.BELEGT)){
+                        updateid = i;
+                        break;
+                    }
+                }
+                state = "FREI";
+                controller.raumeParkplatz(updateid);
+                adminUpdate = true;
+                textToAdmin.add("Fahrzeug hat sich abgemeldet.");
+            }
+        }
+    }
     public void einfahrtAbfragen(ObjectOutputStream out, ObjectInputStream in) throws IOException, InterruptedException {
 
         while (true) {
@@ -181,21 +261,26 @@ public class Main {
 
             String code = in.readUTF();
 
-            if (code.equals(String.valueOf(Einfahrt.FAHRZEUG_ANMELDEN))) {
+            if (code.equals(String.valueOf(Protokoll.FAHRZEUG_ANMELDEN))) {
                 //Routine
                 updateid = rand.nextInt(Controller.parkplätze.length());
                 state = "BELEGT";
                 controller.belegeParkplatz(updateid);
                 adminUpdate = true;
-                textToAdmin.add("Neues Fahrzeug hat sich angemeldet.");
 
-            } else if (code.equals(String.valueOf(Einfahrt.ISTPARKHAUSVOLL))) {
+                int ticketnum = controller.regNewTicket();
+                out.writeInt(ticketnum);
+                out.flush();
+                textToAdmin.add("Neues Fahrzeug hat sich angemeldet.");
+                textToAdmin.add("Ticket Id: " + ticketnum);
+
+            } else if (code.equals(String.valueOf(Protokoll.ISTPARKHAUSVOLL))) {
 
                 textToAdmin.add("Status Request von Einfahrt.");
-                out.writeUTF(String.valueOf(Einfahrt.PARKHAUSISTNICHTVOLL));
+                out.writeUTF(String.valueOf(Protokoll.PARKHAUSISTNICHTVOLL));
                 out.flush();
 
-            } else if (code.equals(String.valueOf(Einfahrt.ERROR001))) {
+            } else if (code.equals(String.valueOf(Protokoll.ERROR001))) {
 
                 textToAdmin.add("Parkhaus ist Voll. [Error Code 001]");
             }
