@@ -3,7 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui_Admin.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -25,7 +24,15 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Button fx:id="showText" layoutX="106.0" layoutY="44.0" mnemonicParsing="false" onMouseClicked="#zeigeText" prefHeight="45.0" prefWidth="88.0" text="Show Text" />
+            <ChoiceBox fx:id="boxStatus" layoutX="84.0" layoutY="14.0" prefHeight="25.0" prefWidth="66.0" />
+            <ChoiceBox fx:id="boxIsMietet" layoutX="173.0" layoutY="14.0" prefHeight="25.0" prefWidth="66.0" />
+            <Button fx:id="addButton" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#addParkplatz" prefHeight="25.0" prefWidth="66.0" text="Add" />
+            <Button fx:id="removeButton" layoutX="1.0" layoutY="54.0" mnemonicParsing="false" onMouseClicked="#removeParkplatz" prefHeight="25.0" prefWidth="66.0" text="Remove" />
+            <TextField fx:id="idBox" layoutX="84.0" layoutY="54.0" prefHeight="25.0" prefWidth="66.0" promptText="Id" />
+            <Button fx:id="changeButton" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#changeParkplatz" prefHeight="25.0" prefWidth="66.0" text="Change" />
+            <ChoiceBox fx:id="choiceBoxStatus" layoutX="168.0" layoutY="94.0" prefHeight="25.0" prefWidth="66.0" />
+            <ChoiceBox fx:id="choiseboxIsMietet" layoutX="242.0" layoutY="94.0" prefHeight="25.0" prefWidth="58.0" />
+            <TextField fx:id="idField" layoutX="84.0" layoutY="94.0" prefHeight="25.0" prefWidth="66.0" promptText="Id" />
          </children>
       </AnchorPane>
       <AnchorPane GridPane.columnIndex="1">
@@ -72,7 +79,7 @@
                   </Label>
                </children>
             </HBox>
-            <Separator layoutX="144.0" layoutY="-21.0" orientation="VERTICAL" prefHeight="179.0" prefWidth="3.0" />
+            <Separator layoutX="147.0" layoutY="-30.0" orientation="VERTICAL" prefHeight="179.0" prefWidth="3.0" />
             <Separator layoutY="43.0" prefHeight="3.0" prefWidth="300.0" />
          </children>
       </AnchorPane>

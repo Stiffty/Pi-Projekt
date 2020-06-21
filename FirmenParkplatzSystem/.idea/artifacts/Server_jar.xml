@@ -6,6 +6,7 @@
         <element id="file-copy" path="$PROJECT_DIR$/../Compiliert/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="FirmenParkplatzSystem" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fazecast/jSerialComm/2.5.3/jSerialComm-2.5.3.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Arduino/out/artifacts/ArduinoJava_jar/ArduinoJava.jar" path-in-jar="/" />
     </root>
   </artifact>

@@ -70,10 +70,10 @@
             </HBox>
             <HBox alignment="CENTER" AnchorPane.bottomAnchor="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
                <children>
-                  <TextField fx:id="codeField" />
+                  <TextField fx:id="codeField" promptText="code" />
                </children>
             </HBox>
-            <Label layoutX="269.0" layoutY="160.0" prefHeight="20.0" prefWidth="62.0" text="Ihr Code:">
+            <Label layoutX="269.0" layoutY="160.0" prefHeight="20.0" prefWidth="62.0" text="Ihr Code:" AnchorPane.bottomAnchor="220.0" AnchorPane.topAnchor="160.0">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
