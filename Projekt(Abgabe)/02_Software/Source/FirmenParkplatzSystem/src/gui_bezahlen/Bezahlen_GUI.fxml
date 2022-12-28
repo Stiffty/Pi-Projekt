@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.*?>
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui_bezahlen.Controller">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgb(176,176,176);">
+         <children>
+            <HBox alignment="CENTER" layoutX="95.9000015258789" layoutY="226.89999389648438" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Button fx:id="einparken_Button" alignment="CENTER" contentDisplay="TOP" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#clicked_Einparken" prefHeight="132.0" prefWidth="404.0" stylesheets="@Button.css" text="Bezahlen" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS">
+                     <font>
+                        <Font name="Arial Bold" size="49.0" />
+                     </font>
+                     <effect>
+                        <Lighting diffuseConstant="1.25" specularConstant="0.9" specularExponent="18.6" surfaceScale="2.19">
+                           <bumpInput>
+                              <Shadow blurType="GAUSSIAN" height="29.1575" radius="14.264375" width="29.9">
+                                 <color>
+                                    <Color red="0.06666667014360428" green="0.054901961237192154" blue="0.054901961237192154" />
+                                 </color></Shadow>
+                           </bumpInput>
+                           <light>
+                              <Light.Distant azimuth="57.57" elevation="141.29" />
+                           </light>
+                        </Lighting>
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="23.0" left="23.0" right="23.0" top="23.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="26.0" layoutY="44.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="44.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="TOP" ellipsisString="...." prefHeight="82.0" prefWidth="548.0" styleClass="hbox" stylesheets="@Button.css" text="Bezahl Automat">
+                     <font>
+                        <Font name="Agency FB Bold" size="34.0" />
+                     </font>
+                     <rotationAxis>
+                        <Point3D x="1.0" y="1.0" z="1.0" />
+                     </rotationAxis>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="151.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Ihr Code:" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="151.0">
+               <children>
+                  <Separator opacity="0.0" prefWidth="70.0" />
+                  <Label text="Preis:">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" AnchorPane.bottomAnchor="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="151.0">
+               <children>
+                  <Label text="Zeit:">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator opacity="0.0" prefWidth="70.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+               <children>
+                  <Label fx:id="zeit">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Label>
+                  <Separator opacity="0.0" prefWidth="70.0" />
+               </children>
+            </HBox>
+            <HBox AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+               <children>
+                  <Separator opacity="0.0" prefWidth="70.0" />
+                  <Label fx:id="preis">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+               <children>
+                  <TextField fx:id="codeField" alignment="CENTER" promptText="Code" text="Code">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

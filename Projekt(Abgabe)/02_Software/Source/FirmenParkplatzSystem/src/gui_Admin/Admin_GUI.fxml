@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui_Admin.Controller">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+         <children>
+            <TextArea fx:id="textField" editable="false" layoutX="7.0" layoutY="-49.0" prefHeight="125.0" prefWidth="293.0" wrapText="true" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="14.0" />
+               </font></TextArea>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <ChoiceBox fx:id="boxStatus" layoutX="84.0" layoutY="14.0" prefHeight="25.0" prefWidth="66.0" />
+            <ChoiceBox fx:id="boxIsMietet" layoutX="173.0" layoutY="14.0" prefHeight="25.0" prefWidth="66.0" />
+            <Button fx:id="addButton" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#addParkplatz" prefHeight="25.0" prefWidth="66.0" text="Add" />
+            <Button fx:id="removeButton" layoutX="1.0" layoutY="54.0" mnemonicParsing="false" onMouseClicked="#removeParkplatz" prefHeight="25.0" prefWidth="66.0" text="Remove" />
+            <TextField fx:id="idBox" layoutX="84.0" layoutY="54.0" prefHeight="25.0" prefWidth="66.0" promptText="Id" />
+            <Button fx:id="changeButton" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#changeParkplatz" prefHeight="25.0" prefWidth="66.0" text="Change" />
+            <ChoiceBox fx:id="choiceBoxStatus" layoutX="168.0" layoutY="94.0" prefHeight="25.0" prefWidth="66.0" />
+            <ChoiceBox fx:id="choiseboxIsMietet" layoutX="242.0" layoutY="94.0" prefHeight="25.0" prefWidth="58.0" />
+            <TextField fx:id="idField" layoutX="84.0" layoutY="94.0" prefHeight="25.0" prefWidth="66.0" promptText="Id" />
+         </children>
+      </AnchorPane>
+      <AnchorPane GridPane.columnIndex="1">
+         <children>
+            <TableView fx:id="Parkplätze" editable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <columns>
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <HBox layoutY="23.0" AnchorPane.bottomAnchor="115.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+               <children>
+                  <Separator opacity="0.0" prefWidth="10.0" />
+                  <Label text="Freie Parkplätze:" textAlignment="CENTER">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Separator opacity="0.0" prefWidth="60.0" />
+                  <Label prefHeight="20.0" prefWidth="134.0" text="Belegte Parkplätze:" textAlignment="RIGHT">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutX="14.0" layoutY="59.0" AnchorPane.bottomAnchor="79.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-14.0" AnchorPane.topAnchor="59.0">
+               <children>
+                  <Label fx:id="frei" text="Label">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Separator opacity="0.0" prefWidth="200.0" />
+                  <Label fx:id="belegt" text="Label">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator layoutX="147.0" layoutY="-30.0" orientation="VERTICAL" prefHeight="179.0" prefWidth="3.0" />
+            <Separator layoutY="43.0" prefHeight="3.0" prefWidth="300.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>
